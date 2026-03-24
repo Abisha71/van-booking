@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Van Booking</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0b1d3a, #102a54);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background: #08142b;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #4da6ff;
+        }
+        
+        .container {
+            max-width: 520px;
+            margin: 60px auto;
+            background: #102a54;
+            padding: 30px;
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        h2 {
+            text-align: center;
+            color: #4da6ff;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4da6ff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #0b1d3a;
+            border-radius: 6px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .result.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .driver-card {
+            margin-top: 15px;
+            padding: 12px;
+            background: #08142b;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            background: #1ebe5d;
+        }
+        /* Van Image Styling */
+        
+        .van-image {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-image: url('https://carused.jp/images/catalog/nissan/caravan_van_2001/change_01.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .van-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">🚐 PRATHEEP TOURS 🌍</div>
+
+    <div class="van-image"></div>
+
+    <div class="container">
+        <h2>🚀 Book Your Ride</h2>
+
+        <form id="bookingForm">
+            <input type="text" id="pickup" placeholder="📍 Pickup Location" required>
+            <input type="text" id="drop" placeholder="📍 Drop Location" required>
+            <input type="number" id="passengers" placeholder="👥 Passengers" required>
+            <button type="submit">✅ Book Now</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <a href="https://wa.me/94779104538" class="whatsapp-float" target="_blank">
+        💬
+    </a>
+
+    <script>
+        const driver = {
+            company: "🚐 PRATHEEP TOURS"
+        };
+
+        // Booking form submit
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let pickup = document.getElementById('pickup').value;
+            let drop = document.getElementById('drop').value;
+            let passengers = document.getElementById('passengers').value;
+
+            const resultEl = document.getElementById('result');
+            resultEl.innerHTML = `
+        <h3>🎉 Booking Confirmed 🚐</h3>
+        <p>📍 <strong>From:</strong> ${pickup}</p>
+        <p>📍 <strong>To:</strong> ${drop}</p>
+        <p>👥 <strong>Passengers:</strong> ${passengers}</p>
+
+        <div class="driver-card">
+            <h4>${driver.company}</h4>
+            <p>⭐ Trusted Travel Service</p>
+            <p>💬 Click WhatsApp button to contact driver</p>
+        </div>
+    `;
+            resultEl.classList.add('visible');
+        });
+
+        // Fade in container & van image on scroll
+        window.addEventListener('scroll', fadeInOnScroll);
+        window.addEventListener('load', fadeInOnScroll);
+
+        function fadeInOnScroll() {
+            const container = document.querySelector('.container');
+            const van = document.querySelector('.van-image');
+
+            const containerTop = container.getBoundingClientRect().top;
+            const vanTop = van.getBoundingClientRect().top;
+            const screenHeight = window.innerHeight;
+
+            if (containerTop < screenHeight - 100) container.classList.add('visible');
+            if (vanTop < screenHeight - 100) van.classList.add('visible');
+        }
+    </script>
+
+</body>
+
+</html>
